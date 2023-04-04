@@ -9,6 +9,7 @@ public class CollectableControl : MonoBehaviour
 {
     public static int score = 0;
     public GameObject scoreDisplay;
+    public GameObject coinEndDisplay;
    
     // Update is called once per frame
     void Update()
@@ -16,6 +17,7 @@ public class CollectableControl : MonoBehaviour
         if (scoreDisplay != null)
         {
             scoreDisplay.GetComponent<TextMeshProUGUI>().text = score.ToString();
+            coinEndDisplay.GetComponent<TextMeshProUGUI>().text = score.ToString();
         }
     }
 }

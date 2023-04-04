@@ -9,6 +9,7 @@ using System;
 public class LevelDistance : MonoBehaviour
 {
     public GameObject distanceDisplay;
+    public GameObject distanceEndDisplay;
     public int distanceRan;
     public bool addingDistance = false;
 
@@ -28,6 +29,8 @@ public class LevelDistance : MonoBehaviour
     {
         distanceRan += 1;
         distanceDisplay.GetComponent<TextMeshProUGUI>().text = distanceRan.ToString();
+        distanceEndDisplay.GetComponent<TextMeshProUGUI>().text = distanceRan.ToString();
+
         yield return new WaitForSeconds(0.25f);
         addingDistance = false;
     }
