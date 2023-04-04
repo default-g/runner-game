@@ -25,6 +25,11 @@ public class PlayerMove : MonoBehaviour
                 transform.Translate(Vector3.left * Time.deltaTime * leftRightSpeed * -1);
             }
         }
+        if (moveSpeed < 10)
+        {
+            moveSpeed += 0.001f;
+        }
+
     }
 }
 
