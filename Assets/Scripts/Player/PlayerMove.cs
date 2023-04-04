@@ -7,6 +7,9 @@ public class PlayerMove : MonoBehaviour
     public float moveSpeed = 3;
     public float leftRightSpeed = 4;
     public static bool canMove = false;
+    public bool isJumping = false;
+    public bool comingDown = false;
+    public GameObject playerObject;
 
     void Update()
     {
@@ -28,12 +31,42 @@ public class PlayerMove : MonoBehaviour
                     transform.Translate(Vector3.left * Time.deltaTime * leftRightSpeed * -1);
                 }
             }
-            if (moveSpeed < 10)
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.Space))
             {
-                moveSpeed += 0.001f;
+                if (isJumping == false)
+                {
+                    isJumping = true;
+                    playerObject.GetComponent<Animator>().Play("Jump");
+                    StartCoroutine(JumpSequence());
+                }
+            }
+            if (isJumping == true)
+            {
+                if (comingDown == false)
+                {
+                    transform.Translate(Vector3.up * Time.deltaTime * 5, Space.World);
+                }
+                if (comingDown == true)
+                {
+                    transform.Translate(Vector3.up * Time.deltaTime * -5, Space.World);
+                }
             }
         }
-        
+    }
+
+    IEnumerator JumpSequence()
+    {
+        yield return new WaitForSeconds(0.5f);
+        comingDown = true;
+        yield return new WaitForSeconds(0.5f);
+        isJumping = false;
+        comingDown = false;
+        if (canMove)
+        {
+            playerObject.GetComponent<Animator>().Play("Standard Run");
+
+        }
     }
 }
 
