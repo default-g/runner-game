@@ -41,6 +41,38 @@ public class PlayerMove : MonoBehaviour
                     StartCoroutine(JumpSequence());
                 }
             }
+
+
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                if (touch.position.x < Screen.width / 2)
+                {
+                    if (this.gameObject.transform.position.x > LevelBoundary.leftSide)
+                    {
+                        transform.Translate(Vector3.left * Time.deltaTime * leftRightSpeed);
+                    }
+                }
+                if (touch.position.x > Screen.width / 2)
+                {
+                    if (this.gameObject.transform.position.x < LevelBoundary.rightSide)
+                    {
+                        transform.Translate(Vector3.left * Time.deltaTime * leftRightSpeed * -1);
+                    }
+                }
+
+                if (Input.touchCount >= 2)
+                {
+                    if (isJumping == false)
+                    {
+                        isJumping = true;
+                        playerObject.GetComponent<Animator>().Play("Jump");
+                        StartCoroutine(JumpSequence());
+                    }
+                }
+
+            }
+
             if (isJumping == true)
             {
                 if (comingDown == false)
@@ -57,9 +89,10 @@ public class PlayerMove : MonoBehaviour
 
     IEnumerator JumpSequence()
     {
-        yield return new WaitForSeconds(0.5f);
+        float jumpTime = 0.5f;
+        yield return new WaitForSecondsRealtime(jumpTime);
         comingDown = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitWhile(() => transform.position.y > -3.19f);
         isJumping = false;
         comingDown = false;
         if (canMove)
