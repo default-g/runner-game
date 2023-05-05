@@ -22,7 +22,6 @@ public class EndRunSequence : MonoBehaviour
         yield return new WaitForSeconds(3);
         liveCoins.SetActive(false);
         liveDistance.SetActive(false);
-        liveTime.SetActive(false);
         endScreen.SetActive(true);
         yield return new WaitForSeconds(3);
         fadeOut.SetActive(true);
